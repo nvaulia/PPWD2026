@@ -21,11 +21,8 @@
         <a href="#hobi">Hobi</a>
         <a href="#kontak">Kontak</a>
     </nav>
-
     <main class="konten">
-
         <section id="tentang">
-
             <h2>Tentang Saya</h2>
             <p>
                 Halo! Saya Novi Aulia, mahasiswa Program Studi Sistem Informasi.
