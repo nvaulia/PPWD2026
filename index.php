@@ -9,10 +9,10 @@
 
 <body>
    <header class="header">
-        <img src="https://noviaulia1043.infinityfreeapp.com/foto%20novi.jpeg" alt="Foto Novi Aulia">
-        <h1>Novi Aulia</h1>
-        <p>Mahasiswa Program Studi Sistem Informasi</p>
-    </header>
+    <img src="foto.jpeg" alt="Foto Novi Aulia">
+    <h1>Novi Aulia</h1>
+    <p>Mahasiswa Program Studi Sistem Informasi</p>
+</header>
 
     <nav class="nav">
         <a href="#tentang">Tentang</a>
