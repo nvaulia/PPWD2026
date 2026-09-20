@@ -1,141 +1,159 @@
+
+<?php
+/**
+ * index.php
+ * -----------------------------------------
+ * Halaman ini bertugas MENAMPILKAN data (READ).
+ * Method yang dipakai di sini: GET (default setiap kali buka URL di browser).
+ *
+ * GET dipakai untuk: mengambil/menampilkan data, tanpa mengubah apapun di database.
+ * Ciri khasnya: data dikirim lewat URL (contoh: index.php?pesan=sukses),
+ * makanya GET tidak cocok untuk data sensitif atau data besar.
+ */
+
+require_once __DIR__ . '/config.php';
+
+// Mengambil semua data donasi dari database, diurutkan dari yang terbaru
+$stmt = $pdo->query("SELECT * FROM donasi ORDER BY created_at DESC");
+$daftarDonasi = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Menghitung total donasi terkumpul (untuk ditampilkan di atas)
+$stmtTotal = $pdo->query("SELECT SUM(jumlah) AS total FROM donasi");
+$total = $stmtTotal->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
+
+/**
+ * Contoh pemakaian GET: menangkap parameter dari URL.
+ * Setelah proses_tambah.php atau hapus.php selesai, mereka akan redirect
+ * ke index.php?pesan=sukses, lalu kode di bawah ini membaca parameter itu
+ * untuk menampilkan notifikasi.
+ *
+ * $_GET adalah "superglobal" bawaan PHP yang otomatis berisi semua data
+ * yang dikirim lewat query string URL (bagian setelah tanda '?').
+ */
+$pesan = $_GET['pesan'] ?? null;
+
+/**
+ * Fungsi bantu untuk memformat angka jadi format Rupiah.
+ * number_format() adalah fungsi bawaan PHP untuk memformat angka.
+ */
+function formatRupiah($angka) {
+    return "Rp " . number_format($angka, 0, ',', '.');
+}
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profil Novi Aulia</title>
-    <link rel="stylesheet" href="https://noviaulia1043.infinityfreeapp.com/style.css?v=2">
+    <title>Sistem Donasi Sederhana</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="CSS/style.css">
 </head>
-
 <body>
-   <header class="header">
-    <img src="foto.jpeg" alt="Foto Novi Aulia">
-    <h1>Novi Aulia</h1>
-    <p>Mahasiswa Program Studi Sistem Informasi</p>
-</header>
 
-    <nav class="nav">
-        <a href="#tentang">Tentang</a>
-        <a href="#jadwal">Jadwal</a>
-        <a href="#hobi">Hobi</a>
-        <a href="#kontak">Kontak</a>
-    </nav>
-    <main class="konten">
-        <section id="tentang">
-            <h2>Tentang Saya</h2>
-            <p>
-                Halo! Saya Novi Aulia, mahasiswa Program Studi Sistem Informasi.
-                Saya sedang belajar membuat website menggunakan HTML dan CSS.
-                Saya tertarik dengan teknologi informasi dan desain website.
-            </p>
-            <p>
-                Saya memiliki cita-cita sebagai data analyst dan pengusaha.Saya sangat suka berbisnis karena dari kecil saya sudah diajarkan untuk berbisnis oleh orang terdekat saya. Saya berharap dapat mengembangkan keterampilan saya dalam bidang teknologi informasi dan desain website.
-            </p>
-        </section>
-        <section id="jadwal">
-            <h2>Jadwal Kuliah</h2>
-            <table>
-                <tr>
-                    <th>Hari</th>
-                    <th>Mata Kuliah</th>
-                    <th>Jam</th>
-                </tr>
-                <tr>
-                    <td>Senin</td>
-                    <td>
-                        Pemrograman Web Dasar<br>
-                        Basis Data<br>
-                        Kewarganegaraan
-                    </td>
-                    <td>
-                        08.20 - 10.00<br>
-                        10.20 - 12.50<br>
-                        13.30 - 15.10
-                    </td>
-                </tr>
-                <tr>
-                    <td>Selasa</td>
-                    <td>
-                        Manajemen Proyek TI<br>
-                        Praktikum Pemrograman Web Dasar
-                    </td>
-                    <td>
-                        07.30 - 09.15<br>
-                        10.20 - 13.10
-                    </td>
-                </tr>
-                <tr>
-                    <td>Rabu</td>
-                    <td>
-                        Aplikasi Multimedia<br>
-                        Rekayasa Perangkat Lunak
-                    </td>
-                    <td>
-                        07.30 - 10.00<br>
-                        10.20 - 12.50
-                    </td>
-                </tr>
-                <tr>
-                    <td>Kamis</td>
-                    <td>
-                        Pemrograman Berorientasi Objek<br>
-                        Kewirausahaan Teknologi Informasi
-                    </td>
-                    <td>
-                        10.20 - 12.00<br>
-                        13.30 - 15.10
-                    </td>
-                </tr>
-                <tr>
-                    <td>Jumat</td>
-                    <td>
-                        Manajemen Rantai Pasok<br>
-                        Praktikum Pemrograman Berorientasi Objek
-                    </td>
-                    <td>
-                        07.30 - 10.00<br>
-                        13.30 - 16.20
-                    </td>
-                </tr>
-            </table>
-        </section>
-        <section id="hobi">
-            <h2>Daftar Hobi</h2>
-            <table>
-                <tr>
-                    <th>No</th>
-                    <th>Hobi</th>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Menonton</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Memasak</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Traveling</td>
-                </tr>
-            </table>
-        </section>
-        <section id="kontak">
-            <h2>Formulir Kontak</h2>
-            <form>
-                <label for="nama">Nama</label>
-                <input type="text" id="nama" placeholder="Tulis nama Anda">
-                <label for="email">Email</label>
-                <input type="email" id="email" placeholder="nama@email.com">
-                <label for="pesan">Pesan</label>
-                <textarea id="pesan" rows="4"
-                    placeholder="Tulis pesan..."></textarea>
-                <button type="submit">Kirim Pesan</button>
+    <div class="container">
+        <h1>💝 Donasi Sederhana</h1>
+
+        <div class="total-card">
+            <p>Total Donasi Terkumpul</p>
+            <h2><?= formatRupiah($total) ?></h2>
+            <span><?= count($daftarDonasi) ?> donatur</span>
+        </div>
+
+        <?php if ($pesan === 'sukses_tambah'): ?>
+            <div class="alert alert-sukses">✅ Donasi berhasil ditambahkan. Terima kasih!</div>
+        <?php elseif ($pesan === 'sukses_hapus'): ?>
+            <div class="alert alert-sukses">🗑️ Data donasi berhasil dihapus.</div>
+        <?php elseif ($pesan === 'gagal'): ?>
+            <div class="alert alert-gagal">❌ Terjadi kesalahan. Coba lagi.</div>
+        <?php endif; ?>
+
+        <div class="form-card">
+            <h3>Form Donasi</h3>
+
+            <!--
+                method="POST" dipakai di sini karena kita MENGIRIM data baru
+                yang akan MENGUBAH isi database (insert data baru).
+                POST menyembunyikan data dari URL (lebih cocok untuk input form),
+                dan tidak ada batas ukuran data seperti GET.
+
+                action="proses_tambah.php" artinya form ini akan diproses
+                oleh file proses_tambah.php, bukan diproses di halaman ini.
+            -->
+            <form action="proses_tambah.php" method="POST" id="formDonasi">
+                <div class="form-group">
+                    <label for="nama">Nama Donatur</label>
+                    <input type="text" id="nama" name="nama" placeholder="Masukkan nama" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="jumlah">Jumlah Donasi (Rp)</label>
+                    <input type="number" id="jumlah" name="jumlah" placeholder="Contoh: 50000" min="1000" required>
+
+                    <!-- Elemen ini akan diisi otomatis oleh JS untuk preview format Rupiah -->
+                    <small id="previewRupiah" class="preview"></small>
+                </div>
+
+                <button type="submit" class="btn-submit">Kirim Donasi</button>
             </form>
-        </section>
-    </main>
-    <footer class="footer">
-        <p>&copy; 2026 Novi Aulia. Dibuat dengan HTML &amp; CSS.</p>
-    </footer>
+        </div>
+
+        <div class="list-card">
+            <h3>Daftar Donatur</h3>
+
+            <?php if (empty($daftarDonasi)): ?>
+                <p class="kosong">Belum ada donasi masuk.</p>
+            <?php else: ?>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nama</th>
+                            <th>Jumlah</th>
+                            <th>Waktu</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <?php foreach ($daftarDonasi as $donasi): ?>
+                            <tr>
+                                <!--
+                                    htmlspecialchars() WAJIB dipakai setiap menampilkan
+                                    data dari database/user ke HTML. Fungsinya mengubah
+                                    karakter berbahaya (misal <script>) jadi teks biasa,
+                                    supaya mencegah serangan XSS (Cross-Site Scripting).
+                                -->
+                                <td><?= htmlspecialchars($donasi['nama']) ?></td>
+
+                                <td><?= formatRupiah($donasi['jumlah']) ?></td>
+
+                                <td>
+                                    <?= date('d M Y, H:i', strtotime($donasi['created_at'])) ?>
+                                </td>
+
+                                <td>
+                                    <!--
+                                        Link hapus ini pakai GET (lewat URL: hapus.php?id=3)
+                                        karena cuma mengirim satu nilai kecil (id) dan
+                                        bukan data form yang kompleks. Konfirmasi dulu
+                                        pakai JavaScript (onclick) sebelum benar-benar hapus.
+                                    -->
+                                    <a href="hapus.php?id=<?= $donasi['id'] ?>"
+                                       class="btn-hapus"
+                                       onclick="return konfirmasiHapus('<?= htmlspecialchars($donasi['nama']) ?>')">
+                                        Hapus
+                                    </a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php endif; ?>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/script.js"></script>
+
 </body>
 </html>
