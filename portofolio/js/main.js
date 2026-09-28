@@ -1,48 +1,29 @@
-// ==========================================
-// 1. TYPING EFFECT
-// ==========================================
-
 const typingText = document.getElementById("typing-text");
 
-const nameText = "Novi Aulia";
+const text = "Hi, I'm Novi Aulia";
 
-let typingIndex = 0;
+let index = 0;
 
-function typingEffect() {
+function typeText() {
 
-    if (!typingText) {
-        return;
-    }
+    if (index < text.length) {
 
-    if (typingIndex < nameText.length) {
+        typingText.textContent += text.charAt(index);
 
-        typingText.textContent +=
-            nameText.charAt(typingIndex);
+        index++;
 
-        typingIndex++;
-
-        setTimeout(typingEffect, 120);
-
-    } else {
-
-        setTimeout(() => {
-
-            typingText.textContent = "";
-
-            typingIndex = 0;
-
-            typingEffect();
-
-        }, 2000);
+        setTimeout(typeText, 100);
     }
 }
 
-typingEffect();
+if (typingText) {
+    typeText();
+}
 
 
-// ==========================================
-// 2. DATA PROJECT
-// ==========================================
+/* =========================
+   DATA PROJECT
+========================= */
 
 const projects = [
 
@@ -70,9 +51,9 @@ const projects = [
 ];
 
 
-// ==========================================
-// 3. MENAMPILKAN PROJECT
-// ==========================================
+/* =========================
+   TAMPILKAN PROJECT
+========================= */
 
 const projectGrid =
     document.getElementById("project-grid");
@@ -87,7 +68,6 @@ if (projectGrid) {
         projectCard.classList.add("project-card");
 
         projectCard.innerHTML = `
-
             <div class="project-icon">
                 ${project.icon}
             </div>
@@ -99,19 +79,17 @@ if (projectGrid) {
             <p>
                 ${project.description}
             </p>
-
         `;
 
         projectGrid.appendChild(projectCard);
 
     });
-
 }
 
 
-// ==========================================
-// 4. DARK MODE
-// ==========================================
+/* =========================
+   DARK MODE
+========================= */
 
 const darkModeBtn =
     document.getElementById("darkModeBtn");
@@ -140,53 +118,40 @@ function updateDarkModeButton() {
 
 if (darkModeBtn) {
 
-    darkModeBtn.addEventListener(
-        "click",
-        function() {
+    darkModeBtn.addEventListener("click", function() {
 
-            document.body.classList.toggle(
-                "dark-mode"
-            );
+        document.body.classList.toggle("dark-mode");
 
-            const darkMode =
-                document.body.classList.contains(
-                    "dark-mode"
-                );
+        const darkMode =
+            document.body.classList.contains("dark-mode");
 
-            localStorage.setItem(
-                "darkMode",
-                darkMode
-            );
+        localStorage.setItem("darkMode", darkMode);
 
-            updateDarkModeButton();
+        updateDarkModeButton();
 
-        }
-    );
-
+    });
 }
 
 
-// ==========================================
-// 5. MENYIMPAN DARK MODE
-// ==========================================
+/* =========================
+   CEK DARK MODE
+========================= */
 
 const savedDarkMode =
     localStorage.getItem("darkMode");
 
 if (savedDarkMode === "true") {
 
-    document.body.classList.add(
-        "dark-mode"
-    );
+    document.body.classList.add("dark-mode");
 
 }
 
 updateDarkModeButton();
 
 
-// ==========================================
-// 6. TAHUN OTOMATIS
-// ==========================================
+/* =========================
+   TAHUN FOOTER
+========================= */
 
 const year =
     document.getElementById("year");
