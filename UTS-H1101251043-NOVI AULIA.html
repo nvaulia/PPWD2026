@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Sederhana Novi</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        background-color: #afe8fb;
+    }
+    header {
+        background-color: rgb(252, 136, 232);
+        color: #f3f2f3;
+        text-align: center;
+    }
+    main {
+        display: flex;
+        justify-content: center;
+        padding: 30px;
+    }
+    .kalkulator {
+        background-color: white;
+        padding: 25px;
+        width: 350px;
+        border-radius: 10px;
+        border:2px solid #b3e000;
+    }
+    .form {
+        display: grid;
+        gap: 10px;
+    }
+    input {
+        padding: 10px;
+    }
+
+    .tombol {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    button {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        margin-top: 20px;
+        border:2px solid #b3e000;
+    }
+
+    button:hover {
+        background-color: #b3e000;
+        color: rgb(13, 145, 252);
+    }
+    output {
+        display: block;
+        margin-top: 12px;
+        font-size: 25px;
+        font-weight: bold;
+    }
+
+    footer {
+        text-align: center;
+        color : white;
+        padding: 20px;
+    }
+
+    @media (max-width: 600px) {
+        .kalkulator {
+            width: 100%;
+        }
+
+        .tombol {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+</style>
+</head>
+<body>
+<header>
+    <h1>Kalkulator Sederhana</h1>
+    <p>Nama : Novi Aulia</p>
+    <p>NIM : H1101251043</p>
+    <p>PPWD(A)</p>
+</header>
+
+<main>
+    <section class="kalkulator">
+        <h2>Kalkulator Sederhana</h2>
+
+        <div class="form">
+            <label for="angka1">Angka1</label>
+            <input type="number" id="angka1">
+
+            <label for="angka2">angka2</label>
+            <input type="number" id="angka2">
+        </div>
+
+        <div class="tombol">
+            <button id="tambah">+</button>
+            <button id="kurang">-</button>
+            <button id="kali">x</button>
+            <button id="bagi">:</button>
+        </div>
+
+        <h3>Hasil :</h3>
+        <output id="hasil">0</output>
+    </section>
+</main>
+
+<footer>
+    <p>UTS Pemrograman Dasar</p>
+</footer>
+
+<script>
+    const angka1_H1101251043 = document.getElementById("angka1");
+    const angka2_H1101251043 = document.getElementById("angka2");
+    const hasil_H1101251043 = document.getElementById("hasil");
+
+    // memanggil tombol
+    const tambah_H1101251043 = document.getElementById("tambah");
+    const kurang_H1101251043 = document.getElementById("kurang");
+    const kali_H1101251043 = document.getElementById("kali");
+    const bagi_H1101251043 = document.getElementById("bagi");
+
+    function ambilAngka_H1101251043() {
+        const angka1 = Number(angka1_H1101251043.value);
+        const angka2 = Number(angka2_H1101251043.value);
+
+        return [angka1, angka2];
+    }
+
+    tambah_H1101251043.addEventListener("click", function() {
+        const [angka1, angka2] = ambilAngka_H1101251043();
+        hasil_H1101251043.textContent = angka1 + angka2;
+    });
+
+    kurang_H1101251043.addEventListener("click", function() {
+        const [angka1, angka2] = ambilAngka_H1101251043();
+        hasil_H1101251043.textContent = angka1 - angka2;
+    });
+
+    kali_H1101251043.addEventListener("click", function() {
+        const [angka1, angka2] = ambilAngka_H1101251043();
+        hasil_H1101251043.textContent = angka1 * angka2;
+    });
+
+    bagi_H1101251043.addEventListener("click", function() {
+        const [angka1, angka2] = ambilAngka_H1101251043();
+
+        if (angka2 === 0) {
+            hasil_H1101251043.textContent = "Error: tidak boleh dibagi 0";
+        } else {
+            hasil_H1101251043.textContent = angka1 / angka2;
+        }
+    });
+</script>
+
+</body>
+</html>
